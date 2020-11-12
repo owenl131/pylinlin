@@ -11,8 +11,8 @@ Nice linear algebra library in python
 
 ## TODOs
 
-- LU factorization
-- LU factorization with partial pivoting
-- QR factorization with householder matrices
-- Spectral decomposition
-- SVD
+- [x] LU factorization
+- [ ] LU factorization with partial pivoting
+- [ ] QR factorization with householder matrices
+- [ ] Spectral decomposition
+- [ ] SVD
