@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pylinlin",
-    version="0.0.1",
+    version="0.0.3",
     author="Owen Leong",
     author_email="owenl131@gmail.com",
     description="A nice linear algebra library",
