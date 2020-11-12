@@ -1,3 +1,4 @@
+from __future__ import annotations
 from typing import List
 
 
@@ -20,7 +21,17 @@ class Matrix:
     def from_cols(cols: List[List[float]]):
         return Matrix(cols)
 
-    def __init__(self, columns: List[List[float]]):
+    @staticmethod
+    def column_scale(col: List[float], scale: float) -> List[float]:
+        return [elem * scale for elem in col]
+
+    @staticmethod
+    def column_add(col1: List[float], col2: List[float]) -> List[float]:
+        if len(col1) != len(col2):
+            raise ValueError("Columns must have same dimension to be added")
+        return [a + b for a, b in zip(col1, col2)]
+
+    def __init__(self: Matrix, columns: List[List[float]]):
         self._num_cols = len(columns)
         self._num_rows = len(columns[0])
         for col in columns:
@@ -28,27 +39,44 @@ class Matrix:
                 raise ValueError("Columns must have equal length")
         self.columns = columns
 
-    def size(self) -> (int, int):
+    def size(self: Matrix) -> (int, int):
         return (self._num_rows, self._num_cols)
 
-    def num_rows(self):
+    def num_rows(self: Matrix) -> int:
         return self._num_rows
 
-    def num_cols(self):
+    def num_cols(self: Matrix) -> int:
         return self._num_cols
 
-    def get_row(self, index: int) -> List[float]:
+    def get_row(self: Matrix, index: int) -> List[float]:
         if index < 0 or index >= self.num_rows():
             raise ValueError("Index out of bounds")
         return [col[index] for col in self.columns]
 
-    def get_col(self, index: int) -> List[float]:
+    def get_col(self: Matrix, index: int) -> List[float]:
         if index < 0 or index >= self.num_cols():
             raise ValueError("Index out of bounds")
         return self.columns[index]
 
-    def all_cols(self):
+    def all_cols(self: Matrix) -> List[List[float]]:
         return self.columns
 
-    def transpose(self):
+    def transpose(self: Matrix) -> Matrix:
         return Matrix.from_rows(self.columns)
+
+    def multiply_column(self: Matrix, vector: List[float]) -> List[float]:
+        if self.num_cols() != len(vector):
+            raise ValueError(
+                f"Incompatible sizes for multiplication: {self.size()} and {len(vector)}")
+        result = [0] * self.num_rows()
+        for col, multiplier in zip(self.all_cols(), vector):
+            result = Matrix.column_add(
+                result, Matrix.column_scale(col, multiplier))
+        return result
+
+    def multiply(self: Matrix, other: Matrix) -> Matrix:
+        if self.num_cols() != other.num_rows():
+            raise ValueError(
+                f"Incompatible matrix sizes for multiplication: {self.size()} and {other.size()}")
+        result = [self.multiply_column(col) for col in other.all_cols()]
+        return Matrix.from_cols(result)

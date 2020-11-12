@@ -1,7 +1,14 @@
 from pylinlin.matrix import Matrix
+import pytest
 
 
 class TestMatrix:
+
+    def test_create_fail(self):
+        with pytest.raises(ValueError):
+            Matrix.from_cols([[1, 2], [3], [5, 6]])
+        with pytest.raises(ValueError):
+            Matrix.from_rows([[1, 2], [3, 4], [6]])
 
     def test_create_from_rows(self):
         matrix = Matrix.from_rows([[1, 2], [3, 4], [5, 6]])
@@ -30,3 +37,18 @@ class TestMatrix:
             assert matrix.get_row(i) == mat_transpose.get_col(i)
         for i in range(matrix.num_cols()):
             assert matrix.get_col(i) == mat_transpose.get_row(i)
+
+    def test_matrix_multiply(self):
+        matrix1 = Matrix.from_cols([[1, 2], [3, 4], [5, 6]])
+        matrix2 = Matrix.from_cols([[1, 2, 3], [4, 5, 6]])
+        product = matrix1.multiply(matrix2)
+        assert product.size() == (2, 2)
+        assert product.all_cols() == [[22, 28], [49, 64]]
+        product = matrix2.multiply(matrix1)
+        assert product.size() == (3, 3)
+        assert product.all_cols() == [[9, 12, 15], [19, 26, 33], [29, 40, 51]]
+
+    def test_matrix_multiply_fail(self):
+        matrix1 = Matrix.from_cols([[1, 2], [3, 4], [5, 6]])
+        with pytest.raises(ValueError):
+            matrix1.multiply(matrix1)
