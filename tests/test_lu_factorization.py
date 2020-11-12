@@ -14,8 +14,8 @@ class TestLUFactorization:
     def test_lu(self):
         matrix = Matrix.from_cols([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
         mat_l, mat_u = compute_lu_factorization(matrix)
-        assert utils.is_lower_triangular(mat_l)
-        assert utils.is_upper_triangular(mat_u)
+        utils.assert_lower_triangular(mat_l)
+        utils.assert_upper_triangular(mat_u)
         assert self.vector_all(utils.extract_diagonal(mat_l), 1)
         product = mat_l.multiply(mat_u)
         assert product.all_cols() == matrix.all_cols()
@@ -24,8 +24,8 @@ class TestLUFactorization:
         matrix = Matrix.from_cols(
             [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]])
         mat_l, mat_u = compute_lu_factorization(matrix)
-        assert utils.is_lower_triangular(mat_l)
-        assert utils.is_upper_triangular(mat_u)
+        utils.assert_lower_triangular(mat_l)
+        utils.assert_upper_triangular(mat_u)
         assert self.vector_all(utils.extract_diagonal(mat_l), 1)
         product = mat_l.multiply(mat_u)
         assert product.all_cols() == matrix.all_cols()
@@ -44,8 +44,8 @@ class TestLUFactorization:
         matrix = mat_l.multiply(mat_u)
         mat_l, mat_u = compute_lu_factorization(matrix)
         # note LU factorization is not unique therefore we are not comparing L and U
-        assert utils.is_lower_triangular(mat_l)
-        assert utils.is_upper_triangular(mat_u)
+        utils.assert_lower_triangular(mat_l)
+        utils.assert_upper_triangular(mat_u)
         assert self.vector_all(utils.extract_diagonal(mat_l), 1)
         product = mat_l.multiply(mat_u)
         assert product.all_cols() == matrix.all_cols()

@@ -1,20 +1,23 @@
 from .matrix import Matrix
 from typing import List
+import pytest
 
 
-def is_upper_triangular(mat: Matrix) -> bool:
+def assert_square(mat: Matrix):
+    assert mat.num_rows() == mat.num_cols()
+
+
+def assert_upper_triangular(mat: Matrix) -> bool:
     for index, col in enumerate(mat.all_cols()):
         for elem in col[index + 1:]:
-            if elem != 0:
-                return False
+            assert elem == pytest.approx(0)
     return True
 
 
-def is_lower_triangular(mat: Matrix) -> bool:
+def assert_lower_triangular(mat: Matrix) -> bool:
     for index, col in enumerate(mat.all_cols()):
         for elem in col[:index]:
-            if elem != 0:
-                return False
+            assert elem == pytest.approx(0)
     return True
 
 
