@@ -13,6 +13,7 @@ Nice linear algebra library in python
 
 - [x] LU factorization
 - [ ] LU factorization with partial pivoting
-- [ ] QR factorization with householder matrices
+- [x] QR factorization with householder matrices
+- [ ] QR factorization with pivoting
 - [ ] Spectral decomposition
 - [ ] SVD
