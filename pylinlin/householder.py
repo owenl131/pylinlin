@@ -16,8 +16,26 @@ class Householder:
         MatrixView.to_end(mat, (0, 0)).scale(1 / norm2)
         self.base = mat
 
-    def multiply_left(self: Householder, mat: Matrix) -> Matrix:
-        pass
+    def multiply_left(self: Householder, mat: Matrix, pad_top: int = 0) -> Matrix:
+        cols = []
+        all_cols = mat.all_cols()
+        for col in all_cols[:pad_top]:
+            cols.append(col[:])
+        for col in all_cols[pad_top:]:
+            cols.append(self.multiply_left_column(col, pad_top))
+        return Matrix.from_cols(cols)
+
+    def multiply_left_column(self: Householder, vec: List[float], pad_top: int = 0) -> List[float]:
+        # (Ix - 2uuTx)
+        full_x = Matrix.from_cols([vec[:]])
+        x = Matrix.from_cols([vec[pad_top:]])
+        factor = self.base.transpose().multiply(x)
+        factor = factor.get(0, 0)
+        MatrixView.to_end(full_x, (pad_top, 0)).scale_add(
+            MatrixView.to_end(self.base, (0, 0)),
+            -2 * factor
+        )
+        return full_x.get_col(0)
 
     def multiply_right(self: Householder, mat: Matrix) -> Matrix:
         pass
