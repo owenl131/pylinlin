@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="pylinlin-owenl131",
+    name="pylinlin",
     version="0.0.1",
     author="Owen Leong",
     author_email="owenl131@gmail.com",
