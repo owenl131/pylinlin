@@ -1,4 +1,5 @@
-# pylinlin [![PyPI version](https://badge.fury.io/py/pylinlin.svg)](https://badge.fury.io/py/pylinlin)
+# pylinlin [![PyPI version](https://badge.fury.io/py/pylinlin.svg)](https://badge.fury.io/py/pylinlin) [![codecov](https://codecov.io/gh/owenl131/pylinlin/branch/main/graph/badge.svg)](https://codecov.io/gh/owenl131/pylinlin)
+
 
 Nice linear algebra library in python
 
