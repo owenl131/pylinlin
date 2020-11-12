@@ -22,6 +22,17 @@ class Matrix:
         return Matrix(cols)
 
     @staticmethod
+    def zeroes(num_rows: int, num_cols: int) -> Matrix:
+        return Matrix.from_cols([[0] * num_rows for _ in range(num_cols)])
+
+    @staticmethod
+    def identity(dims: int) -> Matrix:
+        cols = [[0] * dims for _ in range(dims)]
+        for i in range(dims):
+            cols[i][i] = 1
+        return Matrix.from_cols(cols)
+
+    @staticmethod
     def column_scale(col: List[float], scale: float) -> List[float]:
         return [elem * scale for elem in col]
 
@@ -38,6 +49,10 @@ class Matrix:
             if len(col) != self.num_rows():
                 raise ValueError("Columns must have equal length")
         self.columns = columns
+
+    def copy(self: Matrix) -> Matrix:
+        cols = [col[:] for col in self.columns]
+        return Matrix.from_cols(cols)
 
     def size(self: Matrix) -> (int, int):
         return (self._num_rows, self._num_cols)
@@ -57,6 +72,13 @@ class Matrix:
         if index < 0 or index >= self.num_cols():
             raise ValueError("Index out of bounds")
         return self.columns[index]
+
+    def get(self: Matrix, row: int, col: int) -> float:
+        if row < 0 or row >= self.num_rows():
+            raise ValueError("Index out of bounds")
+        if col < 0 or col >= self.num_cols():
+            raise ValueError("Index out of bounds")
+        return self.columns[col][row]
 
     def all_cols(self: Matrix) -> List[List[float]]:
         return self.columns
