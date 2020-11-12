@@ -5,7 +5,7 @@ from .matrix_view import MatrixView
 def compute_lu_factorization(mat: Matrix) -> (Matrix, Matrix):
     # do not overwrite original matrix
     mat = mat.copy()
-    mat_l = Matrix.zeroes(mat.num_rows(), mat.num_rows())
+    mat_l = Matrix.identity(mat.num_rows())
     mat_u = Matrix.zeroes(mat.num_rows(), mat.num_cols())
 
     iterations = min(mat.num_rows(), mat.num_cols())
