@@ -36,7 +36,7 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        pytest --doctest-modules --junitxml=junit/test-results.xml --cov=pylinlin/ --cov-report=xml:coverage.xml --cov-report=html --cov-report
+        pytest --doctest-modules --junitxml=junit/test-results.xml --cov=pylinlin/ --cov-report=xml:coverage.xml
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
       with:
