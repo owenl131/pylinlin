@@ -39,9 +39,18 @@ product = matrix.multiply(matrix)  # matrix multiplication
 
 ## TODOs
 
+### Algorithms
+
 - [x] LU factorization
 - [ ] LU factorization with partial pivoting
 - [x] QR factorization with householder matrices
 - [ ] QR factorization with pivoting
+- [ ] Gram Schmidt and Modified Gram Schmidt (help wanted!)
 - [ ] Spectral decomposition
 - [ ] SVD
+
+### Profiling
+
+- [ ] Profile time taken varying size of matrices
+- [ ] Profile time taken to solve linear system comparing different algorithms
+- [ ] Graph error distribution on random matrices
