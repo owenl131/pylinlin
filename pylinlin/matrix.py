@@ -1,5 +1,6 @@
 from __future__ import annotations
 from typing import List
+import math
 
 
 class Matrix:
@@ -102,3 +103,10 @@ class Matrix:
                 f"Incompatible matrix sizes for multiplication: {self.size()} and {other.size()}")
         result = [self.multiply_column(col) for col in other.all_cols()]
         return Matrix.from_cols(result)
+
+    def frobenius_norm(self: Matrix) -> float:
+        sum_sq = 0
+        for col in self.columns:
+            for elem in col:
+                sum_sq += elem * elem
+        return math.sqrt(sum_sq)

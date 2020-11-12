@@ -63,7 +63,7 @@ class MatrixView:
             for row_index in range(sz[0]):
                 self.set_element(
                     row_index, col_index,
-                    float * self.get(row_index, col_index))
+                    scale * self.get(row_index, col_index))
 
     def set_element(self: MatrixView, row: int, col: int, value: float):
         sz = self.size()
