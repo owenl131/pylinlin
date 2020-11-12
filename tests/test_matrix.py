@@ -4,6 +4,10 @@ import pytest
 
 class TestMatrix:
 
+    def test_identity(self):
+        identity = Matrix.identity(3)
+        assert identity.all_cols() == [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
+
     def test_create_fail(self):
         with pytest.raises(ValueError):
             Matrix.from_cols([[1, 2], [3], [5, 6]])
