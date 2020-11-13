@@ -36,6 +36,7 @@ product = matrix.multiply(matrix)  # matrix multiplication
 - Test-driven development
 - Profiling of performance
 - Profiling of numerical stability
+- Lightweight, easy to port over to other languages
 
 ## TODOs
 
@@ -48,9 +49,19 @@ product = matrix.multiply(matrix)  # matrix multiplication
 - [ ] Gram Schmidt and Modified Gram Schmidt (help wanted!)
 - [ ] Spectral decomposition
 - [ ] SVD
+- [ ] Conjugate gradients
+- [ ] Condition number of a matrix
+- [ ] Jacobi SVD
+- [ ] Power iteration
+- [ ] Matrix Pseudoinverse
 
 ### Profiling
 
 - [ ] Profile time taken varying size of matrices
 - [ ] Profile time taken to solve linear system comparing different algorithms
 - [ ] Graph error distribution on random matrices
+
+### Others
+
+- [ ] Make curve fitting demonstration
+- [ ] Make IK demonstration
