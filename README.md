@@ -2,16 +2,27 @@
 
 Nice linear algebra library in python
 
+Based on https://www.cs.utexas.edu/users/flame/laff/alaff/
+
+## Installation
+
+```
+$ pip install pylinlin
+```
+
 ## Examples
 
 ```python
 from pylinlin.matrix import Matrix
 from pylinlin.lu_factorization import compute_lu_factorization
 from pylinlin.qr_factorization import compute_qr_factorization
+from pylinlin.svd import compute_svd
 
 # Create matrix
 matrix = Matrix.from_cols([[1, 2, 3], [4, 5, 6], [7, 8, 10]])  # preferred way to initialize a matrix
 matrix2 = Matrix.from_rows([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+
+matrix.print()  # prints the matrix in a readable format
 
 column_as_list = [1, 2, 3, 4, 5]
 column_vector = Matrix.from_cols([column_as_list])  # column vectors can be represented as matrices
@@ -29,6 +40,8 @@ print(matQ.all_cols())
 print(matQ.transpose().multiply(matQ).all_cols())  # approximately an identity matrix
 
 product = matrix.multiply(matrix)  # matrix multiplication
+
+matU, matS, matV = compute_svd(matrix)
 ```
 
 ## Goals
