@@ -33,8 +33,18 @@ def compute_svd_bidiagonal(mat: Matrix) -> (Matrix, Matrix, Matrix):
     dims = mat.num_cols()
     u = Matrix.identity(dims)
     v = Matrix.identity(dims)
-    for _ in range(50):
+    while True:
         # while not converged
+        # find max off-diagonal
+        max_off_diag = 0
+        diag_sum = 0
+        for i in range(dims - 1):
+            max_off_diag = max(max_off_diag, abs(mat.get(i, i+1)))
+        for i in range(dims):
+            diag_sum += abs(mat.get(i, i))
+        diag_sum /= dims
+        if max_off_diag < diag_sum * 1e-16:
+            break
 
         # introduce the bulge
         givens = Givens(mat.get(0, 0) ** 2 - mat.get(dims - 1, dims - 1) ** 2 - mat.get(dims - 2, dims - 1) ** 2,
@@ -61,8 +71,28 @@ def compute_svd_bidiagonal(mat: Matrix) -> (Matrix, Matrix, Matrix):
                     mat, pad_top=iteration + 1)
                 v = givens_upper.transpose().multiply_left(
                     v, pad_top=iteration + 1)
-    # reorder column
+
     v = v.transpose()
+    # Ensure singular values are non-negative
+    for i in range(dims):
+        if mat.get(i, i) < 0:
+            MatrixView.with_size(mat, (i, i), (1, 1)).scale(-1)
+            MatrixView(u, (0, i), (u.num_rows() - 1, i)).scale(-1)
+
+    # reorder columns
+    sv = [(mat.get(i, i), i) for i in range(dims)]
+    sv.sort()
+    sv = sv[::-1]
+    sorted_v_cols = [v.get_col(index) for value, index in sv]
+    sorted_u_cols = [u.get_col(index) for value, index in sv]
+    v = Matrix.from_cols(sorted_v_cols)
+    u = Matrix.from_cols(sorted_u_cols)
+    mat = Matrix.zeroes(dims, dims)
+    for index, (value, _) in enumerate(sv):
+        MatrixView.with_size(
+            mat, (index, index), (1, 1)
+        ).set_element(0, 0, value)
+
     return u, mat, v
 
 

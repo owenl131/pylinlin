@@ -37,59 +37,43 @@ class TestSVD:
             b = hh.multiply_right(b, index + 1)
         utils.assert_matrix_equal(mat, b)
 
+    def check_svd(self, u, s, v, mat):
+        utils.assert_orthonormal(u)
+        utils.assert_orthonormal(v)
+        utils.assert_lower_triangular(s)
+        utils.assert_upper_triangular(s)
+        u.print()
+        s.print()
+        diagonal = utils.extract_diagonal(s)
+        for i in range(len(diagonal) - 1):
+            assert diagonal[i] >= diagonal[i+1]
+        for elem in diagonal:
+            assert elem >= 0
+        product = u.multiply(s).multiply(v.transpose())
+        utils.assert_matrix_equal(product, mat)
+
     def test_svd_bidiagonal(self):
         mat = Matrix.from_cols([[1, 0, 0], [2, 3, 0], [0, 4, 5]])
         u, s, v = compute_svd_bidiagonal(mat)
-        utils.assert_orthonormal(u)
-        utils.assert_orthonormal(v)
-        product = u.multiply(s)
-        product = product.multiply(v.transpose())
-        product.print()
-        utils.assert_matrix_equal(mat, product)
+        self.check_svd(u, s, v, mat)
 
     def test_svd_bidiagonal_2(self):
         mat = Matrix.from_cols(
             [[3.742, 0, 0], [4.018, 3.511, 0], [0, -3.408, -1.979]])
         u, s, v = compute_svd_bidiagonal(mat)
-        utils.assert_orthonormal(u)
-        utils.assert_orthonormal(v)
-        product = u.multiply(s)
-        product = product.multiply(v.transpose())
-        product.print()
-        utils.assert_matrix_equal(mat, product)
+        self.check_svd(u, s, v, mat)
 
     def test_svd_square(self):
         mat = Matrix.from_cols([[1, 2, 3], [2, 5, 1], [-1, 3, -2]])
         u, s, v = compute_svd(mat)
-        u.transpose().multiply(u).print()
-        utils.assert_orthonormal(u)
-        utils.assert_orthonormal(v)
-        product = u.multiply(s)
-        product = product.multiply(v.transpose())
-        mat.print()
-        product.print()
-        utils.assert_matrix_equal(mat, product)
+        self.check_svd(u, s, v, mat)
 
     def test_svd_more_rows(self):
         mat = Matrix.from_cols([[1, 2, 3, 1], [2, 5, 1, 0], [-1, 3, -2, -2]])
         u, s, v = compute_svd(mat)
-        u.transpose().multiply(u).print()
-        utils.assert_orthonormal(u)
-        utils.assert_orthonormal(v)
-        product = u.multiply(s)
-        product = product.multiply(v.transpose())
-        mat.print()
-        product.print()
-        utils.assert_matrix_equal(mat, product)
+        self.check_svd(u, s, v, mat)
 
     def test_svd_more_cols(self):
         mat = Matrix.from_cols([[1, 2, 3], [2, 5, 1], [-1, 3, -2], [3, 2, 1]])
         u, s, v = compute_svd(mat)
-        u.transpose().multiply(u).print()
-        utils.assert_orthonormal(u)
-        utils.assert_orthonormal(v)
-        product = u.multiply(s)
-        product = product.multiply(v.transpose())
-        mat.print()
-        product.print()
-        utils.assert_matrix_equal(mat, product)
+        self.check_svd(u, s, v, mat)
