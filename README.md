@@ -48,8 +48,8 @@ product = matrix.multiply(matrix)  # matrix multiplication
 - [ ] QR factorization with pivoting
 - [ ] Gram Schmidt and Modified Gram Schmidt (help wanted!)
 - [ ] Spectral decomposition
-- [ ] SVD
-- [ ] Conjugate gradients
+- [x] SVD
+- [ ] Conjugate gradient descent
 - [ ] Condition number of a matrix
 - [ ] Jacobi SVD
 - [ ] Power iteration
