@@ -1,5 +1,5 @@
 from pylinlin.matrix import Matrix
-from pylinlin.lu_factorization import compute_lu_factorization
+from pylinlin.lu_factorization import compute_lu_factorization, solve_with_lu
 import pylinlin.matrix_utils as utils
 
 
@@ -49,3 +49,9 @@ class TestLUFactorization:
         assert self.vector_all(utils.extract_diagonal(mat_l), 1)
         product = mat_l.multiply(mat_u)
         assert product.all_cols() == matrix.all_cols()
+
+    def test_lu_solve(self):
+        matrix = Matrix.from_cols([[1, 2, 3], [4, 5, 6], [7, 8, 10]])
+        b = Matrix.from_cols([[5, 1, -1]])
+        x = solve_with_lu(matrix, b)
+        utils.assert_matrix_equal(b, matrix.multiply(x))

@@ -1,5 +1,6 @@
 from .matrix import Matrix
 from .matrix_view import MatrixView
+from .solve import solve_lower_triangular, solve_upper_triangular
 
 
 def compute_lu_factorization(mat: Matrix) -> (Matrix, Matrix):
@@ -72,3 +73,13 @@ def compute_lu_factorization(mat: Matrix) -> (Matrix, Matrix):
             )
 
     return mat_l, mat_u
+
+
+def solve_with_lu(A: Matrix, b: Matrix) -> Matrix:
+    # returns x such that Ax = b
+    matL, matU = compute_lu_factorization(A)
+    # L(Ux) = b
+    # solve Ly = b
+    y = solve_lower_triangular(matL, b)
+    x = solve_upper_triangular(matU, y)
+    return x
