@@ -19,6 +19,10 @@ class MatrixView:
                       self.end[1] - self.start[1] + 1)
 
     @staticmethod
+    def whole(mat: Matrix):
+        return MatrixView.to_end(mat, (0, 0))
+
+    @staticmethod
     def with_size(mat: Matrix, start: (int, int), size: (int, int)):
         return MatrixView(mat, start, (start[0] + size[0] - 1, start[1] + size[1] - 1))
 
