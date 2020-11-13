@@ -37,8 +37,12 @@ class Householder:
         )
         return full_x.get_col(0)
 
-    def multiply_right(self: Householder, mat: Matrix) -> Matrix:
-        pass
+    def multiply_right(self: Householder, mat: Matrix, pad_top: int = 0) -> Matrix:
+        mat = mat.copy()
+        affected = Matrix.from_cols(mat.all_cols()[pad_top:])
+        applied = self.multiply_left(affected.transpose()).transpose()
+        MatrixView.to_end(mat, (0, pad_top)).set(MatrixView.whole(applied))
+        return mat
 
     def to_matrix(self: Householder) -> Matrix:
         householder_mat = Matrix.identity(self.base.num_rows())

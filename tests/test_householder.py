@@ -15,3 +15,23 @@ class TestHouseholder:
         assert product.get(0, 0) == pytest.approx(vec_as_mat.frobenius_norm())
         for elem in product.get_col(0)[1:]:
             assert elem == pytest.approx(0)
+
+    def test_householder_col(self):
+        vec = [5, 4, 3, 2, 1]
+        householder = Householder(vec)
+        vec_as_mat = Matrix.from_cols([vec])
+        product = householder.multiply_left(vec_as_mat)
+        assert product.num_cols() == 1
+        assert product.get(0, 0) == pytest.approx(vec_as_mat.frobenius_norm())
+        for elem in product.get_col(0)[1:]:
+            assert elem == pytest.approx(0)
+
+    def test_householder_row(self):
+        vec = [5, 4, 3, 2, 1]
+        householder = Householder(vec)
+        row_matrix = Matrix.from_rows([vec])
+        product = householder.multiply_right(row_matrix)
+        assert product.num_rows() == 1
+        assert product.get(0, 0) == pytest.approx(row_matrix.frobenius_norm())
+        for elem in product.get_row(0)[1:]:
+            assert elem == pytest.approx(0)
