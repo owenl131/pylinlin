@@ -51,6 +51,14 @@ class Matrix:
                 raise ValueError("Columns must have equal length")
         self.columns = columns
 
+    def print(self: Matrix):
+        print("Size: %d by %d" % (self.num_rows(), self.num_cols()))
+        for i in range(self.num_rows()):
+            row = self.get_row(i)
+            for r in row:
+                print("%8.3f " % (r), end='')
+            print()
+
     def copy(self: Matrix) -> Matrix:
         cols = [col[:] for col in self.columns]
         return Matrix.from_cols(cols)
