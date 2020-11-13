@@ -30,7 +30,6 @@ def reduce_to_bidiagonal(mat: Matrix) -> (Matrix, List[Householder], List[Househ
 
 
 def compute_svd_bidiagonal(mat: Matrix) -> (Matrix, Matrix, Matrix):
-    mat.print()
     dims = mat.num_cols()
     u = Matrix.identity(dims)
     v = Matrix.identity(dims)
@@ -62,7 +61,6 @@ def compute_svd_bidiagonal(mat: Matrix) -> (Matrix, Matrix, Matrix):
                     mat, pad_top=iteration + 1)
                 v = givens_upper.transpose().multiply_left(
                     v, pad_top=iteration + 1)
-    mat.print()
     # reorder column
     v = v.transpose()
     return u, mat, v
@@ -79,7 +77,6 @@ def compute_svd(mat: Matrix) -> (Matrix, Matrix, Matrix):
         # truncate r to be n x n, truncate q to be m x n
         r_truncated = MatrixView.with_size(
             r, (0, 0), (mat.num_cols(), mat.num_cols())).to_matrix()
-        r_truncated.print()
         u, s, v = compute_svd(r_truncated)
         u_padded = Matrix.identity(mat.num_rows())
         MatrixView.with_size(
