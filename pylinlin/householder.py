@@ -13,15 +13,16 @@ class Householder:
         norm = mat.frobenius_norm()
         MatrixView.to_end(mat, (0, 0)).scale_add(e0, -norm)
         norm2 = mat.frobenius_norm()
-        MatrixView.to_end(mat, (0, 0)).scale(1 / norm2)
-        self.base = mat
+        if norm2 == 0:
+            self.base = Matrix.zeroes(len(vec), 1)
+        else:
+            MatrixView.to_end(mat, (0, 0)).scale(1 / norm2)
+            self.base = mat
 
     def multiply_left(self: Householder, mat: Matrix, pad_top: int = 0) -> Matrix:
         cols = []
         all_cols = mat.all_cols()
-        for col in all_cols[:pad_top]:
-            cols.append(col[:])
-        for col in all_cols[pad_top:]:
+        for col in all_cols:
             cols.append(self.multiply_left_column(col, pad_top))
         return Matrix.from_cols(cols)
 

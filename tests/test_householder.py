@@ -1,5 +1,6 @@
 from pylinlin.householder import Householder
 from pylinlin.matrix import Matrix
+import pylinlin.matrix_utils as utils
 import pytest
 
 
@@ -15,6 +16,19 @@ class TestHouseholder:
         assert product.get(0, 0) == pytest.approx(vec_as_mat.frobenius_norm())
         for elem in product.get_col(0)[1:]:
             assert elem == pytest.approx(0)
+
+    def test_householder_symmetric(self):
+        vec = [5, 4, 3, 2, 1]
+        householder = Householder(vec)
+        householder_mat = householder.to_matrix()
+        utils.assert_matrix_equal(householder_mat, householder_mat.transpose())
+
+    def test_householder_inverse(self):
+        vec = [5, 4, 3, 2, 1]
+        householder = Householder(vec)
+        householder_mat = householder.to_matrix()
+        product = householder_mat.multiply(householder_mat)
+        utils.assert_matrix_equal(product, Matrix.identity(5))
 
     def test_householder_col(self):
         vec = [5, 4, 3, 2, 1]

@@ -3,6 +3,18 @@ from typing import List
 import pytest
 
 
+def assert_orthonormal(mat: Matrix):
+    assert_square(mat)
+    # qTq should be the identity
+    qTq = mat.transpose().multiply(mat)
+    for index, col in enumerate(qTq.all_cols()):
+        for elem in col[:index]:
+            assert elem == pytest.approx(0)
+        assert col[index] == pytest.approx(1)
+        for elem in col[index+1:]:
+            assert elem == pytest.approx(0)
+
+
 def assert_matrix_equal(mat1: Matrix, mat2: Matrix):
     assert mat1.size() == mat2.size()
     for col1, col2 in zip(mat1.all_cols(), mat2.all_cols()):

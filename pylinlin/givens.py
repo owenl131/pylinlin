@@ -9,9 +9,13 @@ class Givens:
     def __init__(self: Givens, x1: float, x2: float):
         # G * (x1, x2) = (||x||, 0)
         magnitude = math.sqrt(x1 * x1 + x2 * x2)
-        x1 /= magnitude
-        x2 /= magnitude
-        self.matrix = Matrix.from_cols([[x1, -x2], [x2, x1]])
+        self.x1 = x1 / magnitude
+        self.x2 = x2 / magnitude
+        self.matrix = Matrix.from_cols(
+            [[self.x1, -self.x2], [self.x2, self.x1]])
+
+    def transpose(self: Givens) -> Givens:
+        return Givens(self.x1, -self.x2)
 
     def multiply_left(self: Givens, mat: Matrix, pad_top: int = 0):
         mat = mat.copy()
@@ -37,6 +41,7 @@ class Givens:
         extracted = affected.to_matrix()
         product = extracted.multiply(self.matrix)
         affected.set(MatrixView.whole(product))
+        return mat
 
     def to_matrix(self: Givens, pad_top: int = 0, dims: int = 2):
         mat = Matrix.identity(dims)
