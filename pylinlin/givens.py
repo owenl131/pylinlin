@@ -9,8 +9,12 @@ class Givens:
     def __init__(self: Givens, x1: float, x2: float):
         # G * (x1, x2) = (||x||, 0)
         magnitude = math.sqrt(x1 * x1 + x2 * x2)
-        self.x1 = x1 / magnitude
-        self.x2 = x2 / magnitude
+        if magnitude == 0:
+            self.x1 = 1.0
+            self.x2 = 0.0
+        else:
+            self.x1 = x1 / magnitude
+            self.x2 = x2 / magnitude
         self.matrix = Matrix.from_cols(
             [[self.x1, -self.x2], [self.x2, self.x1]])
 
