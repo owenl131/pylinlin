@@ -4,6 +4,8 @@ Nice linear algebra library in python
 
 Based on https://www.cs.utexas.edu/users/flame/laff/alaff/
 
+In theory SVD is working well. In practice it's too slow for anything greater than a 4x4 matrix. Upcoming changes will use the python standard array type to represent the matrix internally instead of a list of lists.
+
 ## Installation
 
 ```
