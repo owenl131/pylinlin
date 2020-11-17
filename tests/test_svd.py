@@ -42,14 +42,14 @@ class TestSVD:
         utils.assert_orthonormal(v)
         utils.assert_lower_triangular(s)
         utils.assert_upper_triangular(s)
-        u.print()
-        s.print()
         diagonal = utils.extract_diagonal(s)
         for i in range(len(diagonal) - 1):
             assert diagonal[i] >= diagonal[i+1]
         for elem in diagonal:
             assert elem >= 0
         product = u.multiply(s).multiply(v.transpose())
+        product.print_full()
+        mat.print_full()
         utils.assert_matrix_equal(product, mat)
 
     def test_svd_bidiagonal(self):
