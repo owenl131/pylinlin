@@ -18,7 +18,7 @@ def assert_orthonormal(mat: Matrix):
 def assert_matrix_equal(mat1: Matrix, mat2: Matrix):
     assert mat1.size() == mat2.size()
     for col1, col2 in zip(mat1.all_cols(), mat2.all_cols()):
-        assert col1 == pytest.approx(col2)
+        assert col1 == pytest.approx(col2, rel=1e-6, abs=1e-8)
 
 
 def assert_square(mat: Matrix):
