@@ -150,6 +150,15 @@ class Matrix:
                 print("%8.3f " % (r), end='')
             print()
 
+    def print_full(self: Matrix):
+        """Outputs a matrix in a readable format for debugging purposes."""
+        print("Size: %d by %d" % (self.num_rows(), self.num_cols()))
+        for i in range(self.num_rows()):
+            row = self.get_row(i)
+            for r in row:
+                print("%20.16f " % (r), end='')
+            print()
+
     def copy(self: Matrix) -> Matrix:
         """Makes a copy of the matrix. Mutating the copy should not affect the original.
 
