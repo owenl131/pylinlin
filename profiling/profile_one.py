@@ -16,4 +16,4 @@ def time_svd(size: int):
 
 
 if __name__ == '__main__':
-    time_svd(5)
+    time_svd(8)

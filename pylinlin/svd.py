@@ -43,7 +43,7 @@ def compute_svd_bidiagonal(mat: Matrix) -> (Matrix, Matrix, Matrix):
         for i in range(dims):
             diag_sum += abs(mat.get(i, i))
         diag_sum /= dims
-        if max_off_diag < diag_sum * 1e-8 and max_off_diag < 1e-8:
+        if max_off_diag < diag_sum * 1e-6 and max_off_diag < 1e-8:
             break
 
         # introduce the bulge
